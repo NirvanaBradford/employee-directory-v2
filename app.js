@@ -17,3 +17,10 @@ app.use("/", employeeRoutes);
 app.route("/").get((req, res) => {
   res.send("Hello employees!");
 });
+
+app.use((error, request, response, next) => {
+  console.error("Error caused by middleware---:", error.message);
+  response.status(error.status || 500).json({
+    error: error.message || "Internal Server Error!!",
+  });
+});
